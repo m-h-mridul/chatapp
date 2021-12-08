@@ -18,7 +18,7 @@ for goole sign in get users name,image and gmail account.
 
 for facebook sign in take user name,image and gmail account.
 
-# Featurs:
+# Features:
 
 
 User cannot messages to other and they commuicate each on live.
