@@ -1,6 +1,11 @@
+# chat app
+
+
 
 Using Flutter for UI
+
 Using firebase database fro backend
+
 Using firebase authencation:
 	gmial & password
 	goole Sign in
