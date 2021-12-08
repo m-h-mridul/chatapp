@@ -21,6 +21,6 @@ for facebook sign in take user name,image and gmail account.
 # Features:
 
 
-User cannot messages to other and they commuicate each on live.
+User can messages to other and they commuicate each on live.
 
 User also see which user ar online or not.
