@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors, unused_element
 
+import 'package:get/route_manager.dart';
+import 'package:potro/helper/callingname.dart';
+import 'package:potro/helper/offlinestroage.dart';
 import 'package:potro/screen/profile/profile.dart';
 import 'package:potro/screen/login/Login.dart';
 import 'package:potro/screen/home/home.dart';
@@ -9,31 +12,20 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'model/userdata.dart';
 import 'screen/Alluser/Alluser.dart';
 import 'screen/messageing/messageing_ui.dart';
 
-//for local notification
-const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', 'High Importance Notifications',
-    description:
-        'This channel is used for important notifications.', // description
-    importance: Importance.high,
-    playSound: true);
-
-// flutter local notifications plugin
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
-
-// that is useing for background notification handler
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-}
-
+String cheakuserLogin = '';
 Future<void> main() async {
-  //
   WidgetsFlutterBinding.ensureInitialized();
-  // intitialize firebase
   await Firebase.initializeApp();
+  OfflineStrogae offlineStrogae = OfflineStrogae.instance;
+  await offlineStrogae.readyDatabase();
+  cheakuserLogin = offlineStrogae.getdata(name: Callingname.userUid);
+  if (cheakuserLogin != "not find") {
+    UserData.userId = cheakuserLogin;
+  }
   // for handing background notifiacaion
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -52,11 +44,12 @@ Future<void> main() async {
   );
 
   // remove status bar and change the icon view
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      // status bar color
-      statusBarColor: Color(0xFFFFFFFF),
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.light));
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+        statusBarColor: Color(0xFFFFFFFF),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light),
+  );
   runApp(const MyApp());
 }
 
@@ -68,9 +61,9 @@ class MyApp extends StatelessWidget {
     notificationshowonapp();
     // if app close then the app is open from notification
     whenappcloseappstart(context);
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: MyHomePage.name,
+      initialRoute: cheakuserLogin != "not find" ? Alluser.name : MyHomePage.name,
       routes: {
         MyHomePage.name: (context) => const MyHomePage(),
         Login.name: (context) => Login(),
@@ -125,3 +118,20 @@ notificationshowonapp() =>
             ));
       }
     });
+
+//for local notification
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel', 'High Importance Notifications',
+    description:
+        'This channel is used for important notifications.', // description
+    importance: Importance.high,
+    playSound: true);
+
+// flutter local notifications plugin
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+// that is useing for background notification handler
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}

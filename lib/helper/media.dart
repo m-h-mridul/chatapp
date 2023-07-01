@@ -10,13 +10,17 @@ class MediaQuerypage {
   static double? _safeAreaVertical;
   static double? safeBlockHorizontal;
   static double? safeBlockVertical;
+  static double? pixels;
+  static double? textSize;
 
   MediaQuerypage.init(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
+    textSize = mediaQueryData!.textScaleFactor;
     screenWidth = mediaQueryData!.size.width;
     screenHeight = mediaQueryData!.size.height;
     smallSizeWidth = screenWidth! / 100;
     smallSizeHeight = screenHeight! / 100;
+    pixels = mediaQueryData!.devicePixelRatio;
     _safeAreaHorizontal =
         mediaQueryData!.padding.left + mediaQueryData!.padding.right;
     _safeAreaVertical =

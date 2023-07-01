@@ -1,6 +1,8 @@
 // ignore_for_file: unnecessary_new, unused_local_variable, unnecessary_null_comparison, non_constant_identifier_names, avoid_print, must_be_immutable
 
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:potro/model/userdata.dart';
 import 'package:potro/screen/Alluser/Alluser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -130,9 +132,18 @@ class Registation extends StatelessWidget {
                                   password: c_password.text.toString().trim());
                           // set user id for get userInformation
                           UserData.userId = userCredential.user!.uid;
+                          SettableMetadata metadata2 = SettableMetadata(
+                            contentType: 'image/jpeg',
+                            customMetadata: {
+                              'caption': "User-image",
+                              'content-name': imageController.imagepath.value,
+                              'author': UserData.firstUserName,
+                              'time': DateTime.now().toString(),
+                            },
+                          );
 
                           String imageLink = await imageController
-                              .image_sentFirebase(UserData.userId);
+                              .image_sentFirebase(UserData.userId, metadata2);
                           //add name & email of user
                           await FirebaseFirestore.instance
                               .collection('users')
@@ -145,9 +156,7 @@ class Registation extends StatelessWidget {
                             'imageLink': imageLink,
                           });
 
-                          // and goto into the app
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              Alluser.name, (Route<dynamic> route) => false);
+                          Get.offAndToNamed(Alluser.name);
                         } catch (e) {
                           print(e);
                         }

@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors_in_immutables, prefer_const_constructors, avoid_print, unused_import, non_constant_identifier_names, unused_local_variable, must_be_immutable
 
+import 'package:flutter/services.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:intl/intl.dart';
@@ -23,41 +24,19 @@ class Alluser extends StatelessWidget {
   static String name = 'Alluser';
   Alluser({Key? key}) : super(key: key);
 
-  // creat firebase instamce
-  //
-  ImageController imageController = Get.put(ImageController());
+ 
   @override
   Widget build(BuildContext context) {
+    MediaQuerypage.init(context);
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+          statusBarColor: Color(0xFFFFFFFF),
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light),
+    );
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-            elevation: 0.0,
-            automaticallyImplyLeading: false,
-            backgroundColor: const Color(0xFF009688),
-            actions: [
-              IconButton(
-                icon: Obx(() => imageview(UserData.firstUserImage.value)),
-                iconSize: 30,
-                onPressed: () {
-                  // user info
-                  Navigator.pushNamed(context, UserProfile.name);
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.more_vert),
-                iconSize: 30,
-                onPressed: () {
-                  showAlertDialog(context);
-                },
-              ),
-            ],
-            title: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: const Text('All Users',
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
-            )),
+        appBar: appbarWidget(context),
         body: SafeArea(
           child: GetX<Usercontroller>(
               init: Usercontroller(),
@@ -153,6 +132,37 @@ class Alluser extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  AppBar appbarWidget(BuildContext context) {
+    return AppBar(
+          elevation: 0.0,
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color(0xFF009688),
+          actions: [
+            IconButton(
+              icon: Obx(() => imageview(UserData.firstUserImage.value)),
+              iconSize: 30,
+              onPressed: () {
+                // user info
+                Navigator.pushNamed(context, UserProfile.name);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.more_vert),
+              iconSize: 30,
+              onPressed: () {
+                showAlertDialog(context);
+              },
+            ),
+          ],
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Text('Patro',
+                style: TextStyle(
+                  color: Colors.white,
+                )),
+          ));
   }
 
   imageview(String userUid) {

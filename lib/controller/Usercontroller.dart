@@ -13,8 +13,6 @@ class Usercontroller extends GetxController {
   @override
   void onInit() {
     print('user Controller class ');
-    //userName.addAll(UserList().getalluser());
-    // print('inside user controller ' + userName.first.toString());
     userName.bindStream(UserList().getalluser());
     super.onInit();
   }

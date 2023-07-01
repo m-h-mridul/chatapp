@@ -6,16 +6,15 @@ import 'package:potro/model/userdata.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ImageController extends GetxController {
+class ImageController {
   var imagepath = ''.obs;
   var firebase_image_url = ''.obs;
 
   FirebaseStorage storage = FirebaseStorage.instance;
   //
-  void imagegetfromGeleary(BuildContext context) async {
+   imagegetfromGeleary(BuildContext context) async {
     try {
       XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
       imagepath.value = image!.path;
@@ -25,14 +24,11 @@ class ImageController extends GetxController {
     }
   }
 
-  //image sent firebase
-  //here using uid for store
-  //image in firebase
-  Future<String> image_sentFirebase(String uid) async {
-    var temp = '';
+  //image sent firebase here using uid for store
+  Future<String> image_sentFirebase(String uid,SettableMetadata metadata) async {
+    String temp = '';
     try {
-      // Uploading the selected image with some custom meta data
-      await storage.ref(uid).putFile(File(imagepath.value));
+      await storage.ref(uid).putFile(File(imagepath.value),metadata);
       temp = await storage.ref(uid).getDownloadURL();
     } on FirebaseException catch (error) {
       if (kDebugMode) {

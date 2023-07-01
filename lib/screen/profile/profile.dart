@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:potro/model/userdata.dart';
 import 'package:flutter/material.dart';
 import 'package:potro/helper/media.dart';
@@ -119,8 +120,17 @@ class UserProfile extends StatelessWidget {
                             MediaQuerypage.smallSizeHeight! * 2)),
                     onPressed: () async {
                       try {
+                        SettableMetadata metadata2 = SettableMetadata(
+                            contentType: 'image/jpeg',
+                            customMetadata: {
+                              'caption':"User-image",
+                              'content-name': imageController.imagepath.value,
+                              'author': UserData.firstUserName,
+                              'time': DateTime.now().toString(),
+                            },
+                          );
                         String imageLink = await imageController
-                            .image_sentFirebase(UserData.userId);
+                            .image_sentFirebase(UserData.userId,metadata2);
                         await FirebaseFirestore.instance
                             .collection('users')
                             .doc(UserData.userId)

@@ -31,9 +31,7 @@ class Messagedatabase {
   // Get message from firebase database
   Stream<List<Messages>> lastMessageGetDatabse(
       CollectionReference<Map<String, dynamic>> collectionReference) {
-    print("last message from databse ");
     return collectionReference.snapshots().asyncMap((event) {
-      print("message list working..");
       List<Messages> message = [];
       for (var element in event.docs) {
         message.add(Messages(
@@ -45,7 +43,7 @@ class Messagedatabase {
     });
   }
 
-// message sent into database
+  // message sent into database
   Future<void> messagesent(String text) async {
     // for current get class intenis
     MessageController controller = Get.find();
@@ -69,12 +67,9 @@ class Messagedatabase {
   // first time or not
   Future<CollectionReference<Map<String, dynamic>>>
       messages_database_cheak() async {
-    print('Cheak user message first time or not ');
     QuerySnapshot<Map<String, dynamic>> users = await FirebaseFirestore.instance
         .collection(UserData.firstUserName + UserData.secondUserName)
         .get();
-
-    print("user ans ${users.docs.isNotEmpty}");
     final userone = FirebaseFirestore.instance
         .collection(UserData.firstUserName + UserData.secondUserName);
     final usertwo = FirebaseFirestore.instance
@@ -86,8 +81,6 @@ class Messagedatabase {
 
   Future<CollectionReference<Map<String, dynamic>>>
       lastMessagesDatabaseCheak() async {
-    print('Cheak user message first time or not ');
-
     QuerySnapshot<
         Map<String,
             dynamic>> userslastmessage = await FirebaseFirestore.instance

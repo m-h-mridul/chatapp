@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:potro/model/userdata.dart';
 
+import '../../helper/callingName.dart';
+import '../../helper/offlinestroage.dart';
 import '../home/home.dart';
 
 showAlertDialog(BuildContext context) {
@@ -17,16 +20,14 @@ showAlertDialog(BuildContext context) {
   Widget loginButton = TextButton(
     child: const Text("Logout"),
     onPressed: () async {
-      // make flase user that he/she are off line
       await FirebaseFirestore.instance
           .collection('users')
           .doc(UserData.userId)
           .update({'online': false, "datetime": Timestamp.now()});
-      // signout from firebase
       await FirebaseAuth.instance.signOut();
-      // goto the app home screen
-      Navigator.pushNamedAndRemoveUntil(
-          context, MyHomePage.name, (Route<dynamic> route) => false);
+      OfflineStrogae offlineStrogae = OfflineStrogae.instance;
+      offlineStrogae.removeData(name: Callingname.userUid);
+      Get.offAllNamed(MyHomePage.name);
     },
   );
 

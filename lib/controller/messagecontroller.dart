@@ -25,10 +25,8 @@ class MessageController extends GetxController {
   // on it method default in getx
   @override
   Future<void> onInit() async {
-    // message from firebase
     user = await Messagedatabase().messages_database_cheak();
     lastMessage_database = await Messagedatabase().lastMessagesDatabaseCheak();
-    //call Massage get functioin  for get user messages
     messageList.bindStream(Messagedatabase().message_getfirebase());
     // await messgaeget();
     super.onInit();
