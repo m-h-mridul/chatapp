@@ -9,9 +9,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import '../../Service/image.dart';
+import '../../controller/fIlemanagemet.dart';
 import '../../helper/media.dart';
 
 class Registation extends StatelessWidget {
@@ -25,7 +24,7 @@ class Registation extends StatelessWidget {
   TextEditingController c_email = new TextEditingController();
   TextEditingController c_password = new TextEditingController();
   // controller
-  ImageController imageController = Get.put(ImageController());
+  final FileManagement _fileManagement = FileManagement();
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +48,11 @@ class Registation extends StatelessWidget {
                   // icon and name  of  the app
                   InkWell(
                       onTap: () {
-                        imageController.imagegetfromGeleary(context);
+                        _fileManagement.imagegetfromGeleary(context);
                       },
-                      child: Obx(() => imageController.imagepath.value != ''
+                      child: Obx(() => _fileManagement.imagepath.value != ''
                           ? Image.file(
-                              File(imageController.imagepath.value),
+                              File(_fileManagement.imagepath.value),
                               width: MediaQuerypage.screenWidth! / 2,
                               height: MediaQuerypage.screenHeight! / 4,
                             )
@@ -136,14 +135,14 @@ class Registation extends StatelessWidget {
                             contentType: 'image/jpeg',
                             customMetadata: {
                               'caption': "User-image",
-                              'content-name': imageController.imagepath.value,
+                              'content-name': _fileManagement.imagepath.value,
                               'author': UserData.firstUserName,
                               'time': DateTime.now().toString(),
                             },
                           );
 
-                          String imageLink = await imageController
-                              .image_sentFirebase(UserData.userId, metadata2);
+                          String imageLink = await _fileManagement
+                              .imgaeSenttoDataBase(UserData.userId, metadata2);
                           //add name & email of user
                           await FirebaseFirestore.instance
                               .collection('users')

@@ -7,20 +7,17 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:potro/model/userdata.dart';
 import 'package:flutter/material.dart';
 import 'package:potro/helper/media.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import '../../Service/image.dart';
+import '../../controller/fIlemanagemet.dart';
 import '../../helper/snakber.dart';
 
 class UserProfile extends StatelessWidget {
   static String name = 'FirstUser';
   UserProfile({Key? key}) : super(key: key);
-  ImageController imageController = Get.put(ImageController());
+  FileManagement imageController = FileManagement();
   // ignore: non_constant_identifier_names
   @override
   Widget build(BuildContext context) {
-    imageController.imageGet();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -41,7 +38,7 @@ class UserProfile extends StatelessWidget {
                 },
                 child: imageController.imagepath.value.isEmpty
                     ? Image.network(
-                        imageController.firebase_image_url.value,
+                        imageController.imagepath.value,
                         width: MediaQuerypage.screenWidth,
                         height: MediaQuerypage.screenHeight! / 4,
                         loadingBuilder: (BuildContext context, Widget child,
@@ -130,7 +127,7 @@ class UserProfile extends StatelessWidget {
                             },
                           );
                         String imageLink = await imageController
-                            .image_sentFirebase(UserData.userId,metadata2);
+                            .imgaeSenttoDataBase(UserData.userId,metadata2);
                         await FirebaseFirestore.instance
                             .collection('users')
                             .doc(UserData.userId)

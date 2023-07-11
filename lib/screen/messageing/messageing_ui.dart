@@ -1,29 +1,33 @@
 // ignore_for_file: avoid_print, unrelated_type_equality_checks, camel_case_types, prefer_const_constructors_in_immutables, prefer_is_empty, prefer_typing_uninitialized_variables, must_be_immutable
 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:potro/Service/Messagedatabase.dart';
 import 'package:potro/model/userdata.dart';
 import 'package:flutter/material.dart';
-import 'package:potro/screen/messageing/imageview.dart';
-import '../../Service/image.dart';
 import '../../helper/media.dart';
-import 'helpermethod/bottomView.dart';
-import 'helpermethod/imageviewer.dart';
-import 'helpermethod/messageview.dart';
+import 'helperwidget/bottomView.dart';
+import '../../helper/cricleImageView.dart';
+import 'helperwidget/messageview.dart';
 
 class Messageing_ui extends StatelessWidget {
   static String name = "Messageing ui";
   Messageing_ui({Key? key}) : super(key: key);
-  // text editor varibale
   TextEditingController messageController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    // bottom style
     final ButtonStyle style = ElevatedButton.styleFrom(
         backgroundColor: const Color(0xFF009688),
         textStyle: const TextStyle(fontSize: 16));
 
-    // start build method
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+          statusBarColor: Color(0xFFFFFFFF),
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light),
+    );
+
     return SafeArea(
       child: Scaffold(
         appBar: appbarView(context),
@@ -53,7 +57,7 @@ class Messageing_ui extends StatelessWidget {
                                   },
                                   icon: Icon(
                                     Icons.file_present,
-                                    color: Colors.green,
+                                    color: Colors.grey,
                                     size: MediaQuerypage.pixels! * 13,
                                   ),
                                 )
@@ -115,7 +119,7 @@ class Messageing_ui extends StatelessWidget {
       ),
       backgroundColor: const Color(0xFF009688),
       actions: [
-        Obx(() => imageview(UserData.secondUserImage.value)),
+        Obx(() => imageviewForProfile(UserData.secondUserImage.value)),
         SizedBox(
           width: MediaQuerypage.smallSizeWidth! * 3,
         )

@@ -14,27 +14,4 @@ class UserData {
   static RxString secondUserImage = "".obs;
 }
 
-// All user list and active status
-class Alluserlist {
-  Alluserlist({
-    required this.userName,
-    required this.activestatius,
-    required this.userUid,
-    required this.lastactive,
-    required this.imageLink,
-  });
-  String userName;
-  bool activestatius;
-  String userUid;
-  Timestamp lastactive = Timestamp.now();
-  String imageLink;
-  RxList<Messages> lastMessage = RxList<Messages>();
-}
 
-// for messageing
-class Messages {
-  Messages({required this.name, required this.text, required this.time});
-  String time;
-  String name;
-  String text;
-}

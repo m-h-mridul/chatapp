@@ -1,29 +1,28 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
+// ignore_for_file: must_be_immutable
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:potro/Service/image.dart';
+import 'package:potro/controller/fIlemanagemet.dart';
+import 'package:video_player/video_player.dart';
+import '../../../Service/Messagedatabase.dart';
+import '../../../controller/messagecontroller.dart';
+import '../../../helper/media.dart';
+import '../../../model/userdata.dart';
 
-import '../../Service/Messagedatabase.dart';
-import '../../controller/messagecontroller.dart';
-import '../../helper/media.dart';
-import '../../model/userdata.dart';
-
-// ignore: must_be_immutable
-class ImageViewer extends StatelessWidget {
-  ImageController value;
-  ImageViewer(
-    this.value, {
-    Key? key,
-  }) : super(key: key);
-  MessageController controller = Get.find<MessageController>();
+class VidepViewforSent extends StatelessWidget {
+  FileManagement fileManagement;
+  VidepViewforSent(this.fileManagement, {super.key});
+  late VideoPlayerController _controller;
   TextEditingController metadata = TextEditingController();
+  MessageController controller = Get.find<MessageController>();
 
   @override
   Widget build(BuildContext context) {
+    _controller =
+        VideoPlayerController.file(File(fileManagement.videopath.value));
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -32,14 +31,35 @@ class ImageViewer extends StatelessWidget {
           children: [
             Container(),
             Positioned(
-              top: MediaQuerypage.smallSizeHeight! * 8,
-              child: Image.file(
-                File(value.imagepath.value),
-                width: MediaQuerypage.screenWidth!,
-                height: MediaQuerypage.screenHeight! * 0.6,
-                fit: BoxFit.fill,
-              ),
-            ),
+                top: MediaQuerypage.smallSizeHeight! * 16,
+                child: Center(
+                  child: FutureBuilder(
+                      future: _controller.initialize(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return SizedBox(
+                            width: MediaQuerypage.screenWidth!,
+                            height: MediaQuerypage.screenHeight! * 0.4,
+                            child: AspectRatio(
+                              aspectRatio: _controller.value.aspectRatio,
+                              child: VideoPlayer(_controller),
+                            ),
+                          );
+                        } else {
+                          return const SizedBox(
+                              child:
+                                  Center(child: CircularProgressIndicator()));
+                        }
+                      }),
+                )),
+
+            // Image.file(
+            //   File(fileController.imagepath.value),
+            //   width: MediaQuerypage.screenWidth!,
+            //   height: MediaQuerypage.screenHeight! * 0.6,
+            //   fit: BoxFit.fill,
+            // ),
+
             Padding(
               padding: EdgeInsets.only(
                 bottom: MediaQuerypage.smallSizeHeight! * 12,
@@ -72,20 +92,23 @@ class ImageViewer extends StatelessWidget {
                     )),
                     IconButton(
                         onPressed: () async {
-                          // Create a metadata object with custom metadata
                           SettableMetadata metadata2 = SettableMetadata(
                             contentType: 'image/jpeg',
                             customMetadata: {
                               'caption': metadata.text,
-                              'content-name': value.imagepath.value,
+                              'content-name': fileManagement.videopath.value,
                               'author': UserData.firstUserName,
                               'time': DateTime.now().toString(),
                             },
                           );
+                          String temp =
+                              fileManagement.videopath.value.split("/").last;
+                          String link =
+                              await fileManagement.videoSenttoDataBase(
+                                  "${controller.user!.id}/$temp", metadata2);
+                          await Messagedatabase()
+                              .documentsentdata('video', link);
 
-                          String temp = await value.image_sentFirebase(
-                              controller.user!.id, metadata2);
-                          await Messagedatabase().messagesent(temp);
                           Get.back();
                         },
                         icon: Icon(
@@ -103,3 +126,5 @@ class ImageViewer extends StatelessWidget {
     );
   }
 }
+
+
