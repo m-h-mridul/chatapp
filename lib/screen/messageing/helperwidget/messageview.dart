@@ -41,7 +41,7 @@ messageView() {
                             child: Text(controller.messagelist[i].name),
                           ),
                           if (controller.messagelist[i].text == 'image') ...[
-                            imageview(controller.messagelist[i].link)
+                            imageview(controller.messagelist[i].link,left)
                           ] else if (controller.messagelist[i].text ==
                               'video') ...[
                             Videoview(controller.messagelist[i].link, left),

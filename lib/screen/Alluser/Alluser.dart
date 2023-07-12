@@ -39,29 +39,28 @@ class Alluser extends StatelessWidget {
         body: GetX<Usercontroller>(
             init: Usercontroller(),
             builder: (control) {
-              return (control.userName.isEmpty)
+              return (control.users.isEmpty)
                   ? const Center(
                       child: Text('Loading...',
                           style: TextStyle(
                             fontSize: 16.0,
                           )))
                   : ListView.builder(
-                      itemCount: control.userName.length,
+                      itemCount: control.users.length,
                       itemBuilder: (context, i) {
                         return InkWell(
                           onTap: () {
                             // sent user name to messaheing ui
-                            UserData.secondUserName =
-                                control.userName[i].userName;
-                            var temp = DateFormat('dd(EE)-M hh:mm a').format(
-                                control.userName[i].lastactive.toDate());
+                            UserData.secondUserName = control.users[i].userName;
+                            var temp = DateFormat('dd(EE)-M hh:mm a')
+                                .format(control.users[i].lastactive.toDate());
 
                             UserData.secondUserActiveTime =
-                                control.userName[i].activestatius
+                                control.users[i].activestatius
                                     ? "Active Now"
                                     : temp;
                             UserData.secondUserImage.value =
-                                control.userName[i].userUid;
+                                control.users[i].imageLink;
 
                             Navigator.pushNamed(context, Messageing_ui.name);
                           },
@@ -79,9 +78,12 @@ class Alluser extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Obx(
-                                      () => imageview(
-                                          control.userName[i].userUid),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Obx(
+                                        () => imageview(
+                                            control.users[i].imageLink),
+                                      ),
                                     ),
                                     Column(
                                       mainAxisAlignment:
@@ -90,17 +92,19 @@ class Alluser extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          control.userName[i].userName
-                                              .toString(),
+                                          control.users[i].userName.toString(),
                                           style: TextStyle(fontSize: 18),
                                         ),
                                         Obx(
                                           () => Text(
-                                            control.lastMessageUser.isEmpty
+                                            control.users[i].lastMessageUser
+                                                    .isEmpty
                                                 ? "Start conversation"
-                                                : control
-                                                    .lastMessageUser[0].text
-                                                    .toString(),
+                                                : ' find data ',
+
+                                            // control.users[i]
+                                            //     .lastMessageUser[0].text
+                                            //     .toString(),
                                             style: TextStyle(fontSize: 12),
                                           ),
                                         ),
@@ -109,7 +113,7 @@ class Alluser extends StatelessWidget {
                                     Spacer(),
                                     Icon(
                                       Icons.circle,
-                                      color: control.userName[i].activestatius
+                                      color: control.users[i].activestatius
                                           ? Colors.green
                                           : Colors.black12,
                                       size: 20,
@@ -162,31 +166,9 @@ class Alluser extends StatelessWidget {
   }
 
   imageview(String userUid) {
-    return Image.network(
-      userUid,
-      width: MediaQuerypage.screenWidth! / 6,
-      height: MediaQuerypage.screenHeight! / 20,
-      loadingBuilder: (BuildContext context, Widget child,
-          ImageChunkEvent? loadingProgress) {
-        if (loadingProgress == null) return child;
-        return Center(
-            child: CircularProgressIndicator(
-          value: loadingProgress.expectedTotalBytes != null
-              ? loadingProgress.cumulativeBytesLoaded /
-                  loadingProgress.expectedTotalBytes!.toDouble()
-              : null,
-        ));
-      },
-      errorBuilder:
-          (BuildContext context, Object exception, StackTrace? stackTrace) =>
-              Image(
-        width: MediaQuerypage.screenWidth! / 6,
-        height: MediaQuerypage.screenHeight! / 20,
-        color: Colors.amberAccent,
-        image: const AssetImage(
-          'assets/user.png',
-        ),
-      ),
+    return CircleAvatar(
+      backgroundColor: Colors.white70,
+      backgroundImage: NetworkImage(userUid),
     );
   }
 }

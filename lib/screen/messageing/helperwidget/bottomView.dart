@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controller/fIlemanagemet.dart';
 import '../../../helper/media.dart';
-import '../sentitemview/imageviewforsent.dart';
+import '../imageviewforsent.dart';
 import '../sentitemview/videoviewforsent.dart';
 
 void settingModalBottomSheet(context) {

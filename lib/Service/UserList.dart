@@ -4,8 +4,7 @@ import 'package:potro/model/alluserlist.dart';
 import 'package:potro/model/userdata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:potro/model/userstatus.dart';
-
-import '../model/message.dart';
+import 'Messagedatabase.dart';
 
 class UserList {
   Stream<QuerySnapshot<Map<String, dynamic>>> users =
@@ -20,8 +19,12 @@ class UserList {
               userName: element.get('name'),
               userUid: element.id.toString(),
               lastactive: element.get("datetime"),
-              imageLink: element.get("imageLink"),
+              imageLink: element.get("imageLink")??" ",
             );
+            CollectionReference<Map<String, dynamic>> databseName =
+                Messagedatabase().userMessageStatus(alluserlist.userName);
+            alluserlist.lastMessageUser
+                .bindStream(getUserMessagesttus(databseName));
             m.add(alluserlist);
           } else {
             // for current user information

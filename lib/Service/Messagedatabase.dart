@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:intl/intl.dart';
-
 import '../model/message.dart';
 
 class Messagedatabase {
@@ -44,13 +43,13 @@ class Messagedatabase {
       "time": DateFormat("hh:mm:ss a").format(DateTime.now()),
     }).whenComplete(() => print("comleted"));
 
-    // await controller.userMessageStatus.set({
-    //   "count": 0,
-    //   "text": text,
-    //   "user": UserData.firstUserName,
-    //   "datetime": Timestamp.now(),
-    //   "time": DateFormat("hh:mm:ss a").format(DateTime.now()),
-    // }).whenComplete(() => print("comleted"));
+    await controller.userMessageStatus!.doc('status').set({
+      "count": 0,
+      "text": text,
+      "user": UserData.firstUserName,
+      "datetime": Timestamp.now(),
+      "time": DateFormat("hh:mm:ss a").format(DateTime.now()),
+    }).whenComplete(() => print("comleted"));
   }
 
   Future<void> documentsentdata(String text, String link) async {
@@ -84,16 +83,17 @@ class Messagedatabase {
     return (users.docs.isNotEmpty) ? userone : usertwo;
   }
 
-  Future<CollectionReference<Map<String, dynamic>>> userMessageStatus() async {
-    QuerySnapshot<Map<String, dynamic>> users = await FirebaseFirestore.instance
-        .collection(
-            "${UserData.firstUserName}${UserData.secondUserName} status-view")
-        .get();
+  CollectionReference<Map<String, dynamic>> userMessageStatus(
+      String secoondUser) {
+    Stream<QuerySnapshot<Map<String, dynamic>>> users = FirebaseFirestore
+        .instance
+        .collection("${UserData.firstUserName}$secoondUser status-view")
+        .snapshots();
     final userone = FirebaseFirestore.instance.collection(
         "${UserData.firstUserName}${UserData.secondUserName} status-view");
-    final usertwo = FirebaseFirestore.instance.collection(
-        "${UserData.secondUserName}${UserData.firstUserName} status-view");
+    final usertwo = FirebaseFirestore.instance
+        .collection("$secoondUser${UserData.firstUserName} status-view");
 
-    return (users.docs.isNotEmpty) ? userone : usertwo;
+    return (users.isBroadcast) ?  usertwo: userone;
   }
 }

@@ -1,5 +1,7 @@
 // All user list and active status
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:potro/model/userstatus.dart';
 
 class Alluserlist {
   Alluserlist({
@@ -14,5 +16,6 @@ class Alluserlist {
   String userUid;
   Timestamp lastactive = Timestamp.now();
   String imageLink;
-  
+  RxList<UserStatus> lastMessageUser = RxList<UserStatus>();
+
 }

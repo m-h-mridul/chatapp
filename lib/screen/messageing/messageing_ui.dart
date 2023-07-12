@@ -37,10 +37,7 @@ class Messageing_ui extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              //firebase data get and show
               messageView(),
-              // /keyborad and button
-              // for text to second user
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
@@ -71,15 +68,10 @@ class Messageing_ui extends StatelessWidget {
                           ),
                         ),
                         controller: messageController,
-                        onChanged: (value) {
-                          // messageText = value;
-                        },
-                        // decoration: kMessageTextFieldDecoration,
+                        onChanged: (value) {},
                       ),
                     ),
                   ),
-                  // sent dta into forebase
-                  // database on button click in
                   SizedBox(
                     height: MediaQuerypage.screenHeight! / 18,
                     width: MediaQuerypage.screenWidth! / 5,
