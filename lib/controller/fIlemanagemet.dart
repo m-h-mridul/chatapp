@@ -4,10 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:image_picker/image_picker.dart';
 import '../Service/filesentdatabase.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+
+import '../helper/snakber.dart';
 
 class FileManagement {
   var imagepath = ''.obs;
   var videopath = ''.obs;
+  var pdfpath = ''.obs;
 
   FirebaseStorage storage = FirebaseStorage.instance;
   final FileSentDatabase _fileSentDatabase = FileSentDatabase();
@@ -30,13 +35,10 @@ class FileManagement {
       if (video != null) {
         videopath.value = video.path;
       }
-      
     } catch (e) {
       debugPrint('Problem finding in openGallery method  form controller');
       debugPrint(e.toString());
     }
-    
-
   }
 
   Future<String> videoSenttoDataBase(
@@ -49,5 +51,26 @@ class FileManagement {
       String uid, SettableMetadata metadata) async {
     return await _fileSentDatabase.imageSentFirebase(
         imagepath.value, uid, metadata);
+  }
+
+  Future<String> pdfSenttoDataBase(
+      String uid, SettableMetadata metadata) async {
+    return await _fileSentDatabase.imageSentFirebase(
+        pdfpath.value, uid, metadata);
+  }
+
+  // Import a PDF file
+  importPDF() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf'],
+      );
+      if (result != null) {
+        pdfpath.value = result.files.single.path!;
+      }
+    } catch (e) {
+      viewSnakber('Error on pddf get', e.toString());
+    }
   }
 }

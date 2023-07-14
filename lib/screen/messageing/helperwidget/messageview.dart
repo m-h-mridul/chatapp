@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
+import 'package:potro/screen/messageing/helperwidget/pdfview.dart';
 import 'package:potro/screen/messageing/helperwidget/videoView.dart';
 
 import '../../../controller/messagecontroller.dart';
@@ -44,7 +45,10 @@ messageView() {
                             imageview(controller.messagelist[i].link,left)
                           ] else if (controller.messagelist[i].text ==
                               'video') ...[
-                            Videoview(controller.messagelist[i].link, left),
+                            Videoview(controller.messagelist[i].link, left),]
+                            else if (controller.messagelist[i].text ==
+                              'pdf') ...[
+                            pdfviewr(controller.messagelist[i].link, left),
                           ] else ...[
                             Container(
                               decoration: BoxDecoration(

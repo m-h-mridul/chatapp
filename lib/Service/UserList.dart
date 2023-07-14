@@ -21,10 +21,10 @@ class UserList {
               lastactive: element.get("datetime"),
               imageLink: element.get("imageLink")??" ",
             );
-            CollectionReference<Map<String, dynamic>> databseName =
-                Messagedatabase().userMessageStatus(alluserlist.userName);
-            alluserlist.lastMessageUser
-                .bindStream(getUserMessagesttus(databseName));
+            // CollectionReference<Map<String, dynamic>> databseName =
+            //     Messagedatabase().userMessageStatus(alluserlist.userName);
+            // alluserlist.lastMessageUser
+            //     .bindStream(getUserMessagesttus(databseName));
             m.add(alluserlist);
           } else {
             // for current user information

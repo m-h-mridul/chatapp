@@ -1,21 +1,26 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
+import 'package:potro/model/userdata.dart';
 import '../../../Service/Messagedatabase.dart';
 import '../../../controller/fIlemanagemet.dart';
 import '../../../controller/messagecontroller.dart';
 import '../../../helper/media.dart';
-import '../../../model/userdata.dart';
 
-// ignore: must_be_immutable
-class ImageViewer extends StatelessWidget {
+// void sendFile(String filePath) async {
+//   if (await canLaunch(filePath)) {
+//     await launch(filePath);
+//   } else {
+//     throw 'Could not launch $filePath';
+//   }
+// }
+
+class Pdfviewer extends StatelessWidget {
   FileManagement fileController;
-  ImageViewer(
-    this.fileController, {
-    Key? key,
-  }) : super(key: key);
+  Pdfviewer(this.fileController, {super.key});
+
   MessageController controller = Get.find<MessageController>();
   TextEditingController metadata = TextEditingController();
 
@@ -23,18 +28,19 @@ class ImageViewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         body: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Container(),
             Positioned(
               top: MediaQuerypage.smallSizeHeight! * 8,
-              child: Image.file(
-                File(fileController.imagepath.value),
+              child: SizedBox(
                 width: MediaQuerypage.screenWidth!,
                 height: MediaQuerypage.screenHeight! * 0.6,
-                fit: BoxFit.fill,
+                child: PDFView(
+                  filePath: fileController.pdfpath.value,
+                ),
               ),
             ),
             Padding(
@@ -69,9 +75,8 @@ class ImageViewer extends StatelessWidget {
                     )),
                     IconButton(
                         onPressed: () async {
-                          // Create a metadata object with custom metadata
                           SettableMetadata metadata2 = SettableMetadata(
-                            contentType: 'image/jpeg',
+                            contentType: 'document/pdf',
                             customMetadata: {
                               'caption': metadata.text,
                               'content-name': fileController.imagepath.value,
@@ -80,12 +85,12 @@ class ImageViewer extends StatelessWidget {
                             },
                           );
                           String temp =
-                              fileController.imagepath.value.split("/").last;
+                              fileController.pdfpath.value.split("/").last;
                           String link =
-                              await fileController.imgaeSenttoDataBase(
+                              await fileController.pdfSenttoDataBase(
                                   "${controller.user!.id}/$temp", metadata2);
                           await Messagedatabase()
-                              .documentsentdata('image', link);
+                              .documentsentdata('pdf',temp ,link);
 
                           Get.back();
                         },

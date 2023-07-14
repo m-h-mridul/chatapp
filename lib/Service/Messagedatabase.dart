@@ -11,7 +11,7 @@ import '../model/message.dart';
 class Messagedatabase {
   // Get message from firebase database
   Stream<List<Messages>> message_getfirebase() {
-    MessageController controller = Get.find();
+    MessageController controller = Get.find<MessageController>();
     return controller.userdata!
         .orderBy("datetime", descending: false)
         .snapshots()
@@ -52,7 +52,7 @@ class Messagedatabase {
     }).whenComplete(() => print("comleted"));
   }
 
-  Future<void> documentsentdata(String text, String link) async {
+  Future<void> documentsentdata(String text,String name, String link) async {
     MessageController controller = Get.find();
     await controller.userdata!.add({
       "text": text,
@@ -83,17 +83,17 @@ class Messagedatabase {
     return (users.docs.isNotEmpty) ? userone : usertwo;
   }
 
-  CollectionReference<Map<String, dynamic>> userMessageStatus(
-      String secoondUser) {
-    Stream<QuerySnapshot<Map<String, dynamic>>> users = FirebaseFirestore
-        .instance
+  Future<CollectionReference<Map<String, dynamic>>> userMessageStatus(
+      String secoondUser)async {
+
+ QuerySnapshot<Map<String, dynamic>> users = await FirebaseFirestore.instance
         .collection("${UserData.firstUserName}$secoondUser status-view")
-        .snapshots();
+        .get();
     final userone = FirebaseFirestore.instance.collection(
         "${UserData.firstUserName}${UserData.secondUserName} status-view");
     final usertwo = FirebaseFirestore.instance
         .collection("$secoondUser${UserData.firstUserName} status-view");
 
-    return (users.isBroadcast) ?  usertwo: userone;
+    return (users.docs.isNotEmpty) ?  usertwo: userone;
   }
 }

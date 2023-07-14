@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controller/fIlemanagemet.dart';
 import '../../../helper/media.dart';
-import '../imageviewforsent.dart';
+import '../sentitemview/imageviewforsent.dart';
+import '../sentitemview/pdfviewer.dart';
 import '../sentitemview/videoviewforsent.dart';
 
 void settingModalBottomSheet(context) {
@@ -41,7 +42,14 @@ void settingModalBottomSheet(context) {
                     ),
                   )),
               InkWell(
-                  onTap: () => {},
+                  onTap: () async {
+                    FileManagement fileManagement = FileManagement();
+                    await fileManagement.importPDF();
+                    Get.back();
+                    if (fileManagement.pdfpath.value != "") {
+                      Get.to(() => Pdfviewer(fileManagement));
+                    }
+                  },
                   child: Container(
                     padding: EdgeInsets.all(MediaQuerypage.smallSizeWidth! * 1),
                     decoration: BoxDecoration(border: Border.all()),
@@ -67,7 +75,7 @@ void settingModalBottomSheet(context) {
                     //     future: fileManagement.videogetfromGeleary(bc),
                     //     builder: (context, snapshot) {
                     //       if (snapshot.connectionState ==
-                    //               ConnectionState.done 
+                    //               ConnectionState.done
                     //           ) {
                     //         Get.back();
                     //         Get.to(() => VidepViewforSent(fileManagement));
