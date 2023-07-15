@@ -63,7 +63,8 @@ class MyApp extends StatelessWidget {
     whenappcloseappstart(context);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: cheakuserLogin != "not find" ? Alluser.name : MyHomePage.name,
+      initialRoute:
+          cheakuserLogin != "not find" ? Alluser.name : MyHomePage.name,
       routes: {
         MyHomePage.name: (context) => const MyHomePage(),
         Login.name: (context) => Login(),
@@ -113,7 +114,8 @@ notificationshowonapp() =>
                 channelDescription: channel.description,
                 color: Colors.blue,
                 playSound: true,
-                icon: '@mipmap/ic_launcher',
+                // icon: '@mipmap/icon_louncher',
+                icon: '@mipmap/icon_louncher',
               ),
             ));
       }

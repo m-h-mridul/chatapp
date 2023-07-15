@@ -3,9 +3,10 @@ import 'package:potro/helper/media.dart';
 
 pdfviewr(String value, bool view) {
   return Container(
+    padding: const EdgeInsets.all(2),
     decoration: BoxDecoration(
        border: Border.all(color: const Color(0xFF909090)),
-       borderRadius:BorderRadius.all(Radius.circular(10)),
+       borderRadius:const BorderRadius.all(Radius.circular(10)),
     ),
     width: MediaQuerypage.screenWidth! * 0.5,
     height: MediaQuerypage.screenHeight! * 0.2,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
 import 'package:potro/screen/messageing/helperwidget/pdfview.dart';
 import 'package:potro/screen/messageing/helperwidget/videoView.dart';
 
 import '../../../controller/messagecontroller.dart';
 import '../../../model/userdata.dart';
+import '../itemviewr and download/itemviewerndownload.dart';
 import 'imageviewer.dart';
 
 messageView() {
@@ -42,11 +44,25 @@ messageView() {
                             child: Text(controller.messagelist[i].name),
                           ),
                           if (controller.messagelist[i].text == 'image') ...[
-                            imageview(controller.messagelist[i].link,left)
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => ItemViewer(
+                                    'image',
+                                    controller.messagelist[i].link,
+                                    controller.messagelist[i].filename));
+                              },
+                              child: Column(
+                                children: [
+                                  Text(controller.messagelist[i].filename),
+                                  imageview(
+                                      controller.messagelist[i].link, left),
+                                ],
+                              ),
+                            ),
                           ] else if (controller.messagelist[i].text ==
                               'video') ...[
-                            Videoview(controller.messagelist[i].link, left),]
-                            else if (controller.messagelist[i].text ==
+                            Videoview(controller.messagelist[i].link, left),
+                          ] else if (controller.messagelist[i].text ==
                               'pdf') ...[
                             pdfviewr(controller.messagelist[i].link, left),
                           ] else ...[

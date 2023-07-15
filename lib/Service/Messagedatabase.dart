@@ -25,6 +25,7 @@ class Messagedatabase {
             text: element.get('text'),
             time: element.get('time'),
             link: element.get('link') ?? "",
+            filename: element.get('filename') ?? "",
           ),
         );
       }
@@ -57,6 +58,7 @@ class Messagedatabase {
     await controller.userdata!.add({
       "text": text,
       'link': link,
+      'filename':name,
       "user": UserData.firstUserName,
       "datetime": Timestamp.now(),
       "time": DateFormat("hh:mm:ss a").format(DateTime.now()),
