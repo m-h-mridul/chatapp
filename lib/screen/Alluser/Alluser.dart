@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:potro/Service/Messagedatabase.dart';
 import 'package:potro/Service/UserList.dart';
 import 'package:potro/controller/Usercontroller.dart';
+import 'package:potro/helper/loadingwidget.dart';
 import 'package:potro/model/userdata.dart';
 import 'package:potro/screen/messageing/messageing_ui.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,11 +41,19 @@ class Alluser extends StatelessWidget {
             init: Usercontroller(),
             builder: (control) {
               return (control.users.isEmpty)
-                  ? const Center(
-                      child: Text('Loading...',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          )))
+                  ?  Center(
+                      child: Column(
+                        children: [
+                          loadingScreen(),
+                          Text(
+                            'Loading...',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   : ListView.builder(
                       itemCount: control.users.length,
                       itemBuilder: (context, i) {

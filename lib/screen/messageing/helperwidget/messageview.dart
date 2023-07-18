@@ -64,7 +64,16 @@ messageView() {
                             Videoview(controller.messagelist[i].link, left),
                           ] else if (controller.messagelist[i].text ==
                               'pdf') ...[
-                            pdfviewr(controller.messagelist[i].link, left),
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => ItemViewer(
+                                    'pdf',
+                                    controller.messagelist[i].link,
+                                    controller.messagelist[i].filename));
+                              },
+                              child: pdfviewr(
+                                  controller.messagelist[i].link, left),
+                            ),
                           ] else ...[
                             Container(
                               decoration: BoxDecoration(

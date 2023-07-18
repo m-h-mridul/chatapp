@@ -8,15 +8,11 @@ imageview(String secondUserImage, bool view) {
     loadingBuilder:
         (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
       if (loadingProgress == null) return child;
-      return SizedBox(
-        width: MediaQuerypage.screenWidth! * 0.5,
-        height: MediaQuerypage.screenHeight! * 0.3,
-        child: CircularProgressIndicator(
-          value: loadingProgress.expectedTotalBytes != null
-              ? loadingProgress.cumulativeBytesLoaded /
-                  loadingProgress.expectedTotalBytes!.toDouble()
-              : null,
-        ),
+      return CircularProgressIndicator(
+        value: loadingProgress.expectedTotalBytes != null
+            ? loadingProgress.cumulativeBytesLoaded /
+                loadingProgress.expectedTotalBytes!.toDouble()
+            : null,
       );
     },
     errorBuilder:
