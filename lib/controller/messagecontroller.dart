@@ -18,7 +18,7 @@ class MessageController extends GetxController {
   @override
   Future<void> onInit() async {
     user = await Messagedatabase().messages_database_cheak();
-    userMessageStatus=await Messagedatabase().userMessageStatus(UserData.secondUserName);
+    userMessageStatus=Messagedatabase().userMessageStatus(UserData.secondUserName);
     messageList.bindStream(Messagedatabase().message_getfirebase());
     // await messgaeget();
     super.onInit();

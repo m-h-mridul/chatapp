@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/cupertino.dart';
 import '../../../helper/media.dart';

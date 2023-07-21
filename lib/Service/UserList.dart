@@ -1,5 +1,4 @@
 // ignore_for_file: file_names, unused_local_variable, avoid_print, non_constant_identifier_names, invalid_use_of_protected_member
-
 import 'package:potro/model/alluserlist.dart';
 import 'package:potro/model/userdata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,18 +13,19 @@ class UserList {
         List<Alluserlist> m = [];
         for (var element in event.docs) {
           if (UserData.userId != element.id.toString()) {
-            Alluserlist alluserlist = Alluserlist(
+            Alluserlist currentUserdata = Alluserlist(
               activestatius: element.get('online'),
               userName: element.get('name'),
               userUid: element.id.toString(),
               lastactive: element.get("datetime"),
-              imageLink: element.get("imageLink")??" ",
+              imageLink: element.get("imageLink") ?? " ",
             );
-            // CollectionReference<Map<String, dynamic>> databseName =
-            //     Messagedatabase().userMessageStatus(alluserlist.userName);
-            // alluserlist.lastMessageUser
-            //     .bindStream(getUserMessagesttus(databseName));
-            m.add(alluserlist);
+            CollectionReference<Map<String, dynamic>> databseName =
+                Messagedatabase().userMessageStatus(currentUserdata.userName);
+            
+            currentUserdata.lastMessageUser
+                .bindStream(getUserMessagesttus(databseName));
+            m.add(currentUserdata);
           } else {
             // for current user information
             UserData.firstUserName = element.get('name');
@@ -48,6 +48,7 @@ class UserList {
             time: element.get('time'),
             count: element.get('count').toString(),
             datatime: element.get('datetime').toString(),
+            seen: false,
           ),
         );
       }

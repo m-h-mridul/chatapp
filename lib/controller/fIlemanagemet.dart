@@ -1,12 +1,10 @@
-// ignore_for_file: unused_element, unused_local_variable, non_constant_identifier_names
+// ignore_for_file: unused_element, unused_local_variable, non_constant_identifier_names, file_names
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:image_picker/image_picker.dart';
 import '../Service/filesentdatabase.dart';
 import 'package:file_picker/file_picker.dart';
-import 'dart:io';
-
 import '../helper/snakber.dart';
 
 class FileManagement {

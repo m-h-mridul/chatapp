@@ -5,11 +5,12 @@ class UserStatus {
   String text;
   String time;
   String user;
-  UserStatus({
-    required this.count,
-    required this.datatime,
-    required this.text,
-    required this.time,
-    required this.user,
-  });
+  bool seen = false;
+  UserStatus(
+      {required this.count,
+      required this.datatime,
+      required this.text,
+      required this.time,
+      required this.user,
+      required this.seen});
 }

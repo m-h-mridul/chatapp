@@ -12,7 +12,7 @@ import '../../controller/fIlemanagemet.dart';
 import '../../helper/snakber.dart';
 
 class UserProfile extends StatelessWidget {
-  static String name = 'FirstUser';
+  static String name = '/FirstUser';
   UserProfile({Key? key}) : super(key: key);
   FileManagement imageController = FileManagement();
   // ignore: non_constant_identifier_names

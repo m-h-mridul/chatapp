@@ -7,7 +7,7 @@ import '../../helper/media.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Login extends StatelessWidget {
-  static String name = 'Login';
+  static String name = '/Login';
   Login({Key? key}) : super(key: key);
 
   // variable

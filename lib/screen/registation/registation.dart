@@ -18,7 +18,7 @@ class Registation extends StatelessWidget {
 
   ///firebase auth
   final _auth = FirebaseAuth.instance;
-  static String name = "Registation";
+  static String name = "/Registation";
   // text field variable
   TextEditingController c_name = new TextEditingController();
   TextEditingController c_email = new TextEditingController();

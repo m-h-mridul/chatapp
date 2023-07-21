@@ -11,7 +11,7 @@ import '../../helper/cricleImageView.dart';
 import 'helperwidget/messageview.dart';
 
 class Messageing_ui extends StatelessWidget {
-  static String name = "Messageing ui";
+  static String name = "/Messageing ui";
   Messageing_ui({Key? key}) : super(key: key);
   TextEditingController messageController = TextEditingController();
 

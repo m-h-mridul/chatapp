@@ -22,7 +22,7 @@ import '../profile/profile.dart';
 import 'AlertDialog.dart';
 
 class Alluser extends StatelessWidget {
-  static String name = 'Alluser';
+  static String name = '/Alluser';
   Alluser({Key? key}) : super(key: key);
 
   @override
@@ -40,11 +40,16 @@ class Alluser extends StatelessWidget {
         body: GetX<Usercontroller>(
             init: Usercontroller(),
             builder: (control) {
-              return (control.users.isEmpty)
-                  ?  Center(
+              return 
+              (control.users.isEmpty)
+                  ? Center(
                       child: Column(
                         children: [
-                          loadingScreen(),
+                          SizedBox(
+                            width: MediaQuerypage.screenWidth,
+                            height: MediaQuerypage.screenHeight! * .6,
+                            child: loadingScreen(),
+                          ),
                           Text(
                             'Loading...',
                             style: TextStyle(
@@ -59,7 +64,6 @@ class Alluser extends StatelessWidget {
                       itemBuilder: (context, i) {
                         return InkWell(
                           onTap: () {
-                            // sent user name to messaheing ui
                             UserData.secondUserName = control.users[i].userName;
                             var temp = DateFormat('dd(EE)-M hh:mm a')
                                 .format(control.users[i].lastactive.toDate());
@@ -109,7 +113,9 @@ class Alluser extends StatelessWidget {
                                             control.users[i].lastMessageUser
                                                     .isEmpty
                                                 ? "Start conversation"
-                                                : ' find data ',
+                                                : control.users[i]
+                                                    .lastMessageUser[0].text
+                                                    .toString(),
 
                                             // control.users[i]
                                             //     .lastMessageUser[0].text

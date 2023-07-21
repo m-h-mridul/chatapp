@@ -1,5 +1,4 @@
 // current user and sent message other user
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get_rx/get_rx.dart';
 
 class UserData {

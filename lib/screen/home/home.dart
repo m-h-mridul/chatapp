@@ -10,7 +10,7 @@ import '../Alluser/Alluser.dart';
 import '../login/Login.dart';
 
 class MyHomePage extends StatefulWidget {
-  static String name = 'MyHomePage';
+  static String name = '/MyHomePage';
   const MyHomePage({
     Key? key,
   }) : super(key: key);

@@ -39,13 +39,14 @@ class Messagedatabase {
     await controller.userdata!.add({
       "text": text,
       'link': "",
+      'filename': '',
       "user": UserData.firstUserName,
       "datetime": Timestamp.now(),
       "time": DateFormat("hh:mm:ss a").format(DateTime.now()),
     }).whenComplete(() => print("comleted"));
 
     await controller.userMessageStatus!.doc('status').set({
-      "count": 0,
+      "count": 1,
       "text": text,
       "user": UserData.firstUserName,
       "datetime": Timestamp.now(),
@@ -53,24 +54,24 @@ class Messagedatabase {
     }).whenComplete(() => print("comleted"));
   }
 
-  Future<void> documentsentdata(String text,String name, String link) async {
+  Future<void> documentsentdata(String text, String name, String link) async {
     MessageController controller = Get.find();
     await controller.userdata!.add({
       "text": text,
       'link': link,
-      'filename':name,
+      'filename': name,
       "user": UserData.firstUserName,
       "datetime": Timestamp.now(),
       "time": DateFormat("hh:mm:ss a").format(DateTime.now()),
     }).whenComplete(() => print("comleted"));
 
-    // await controller.lastMessage_database!.doc('status').update({
-    //   "count": 0,
-    //   "text": text,
-    //   "user": UserData.firstUserName,
-    //   "datetime": Timestamp.now(),
-    //   "time": DateFormat("hh:mm:ss a").format(DateTime.now()),
-    // }).whenComplete(() => print("comleted"));
+    await controller.userMessageStatus!.doc('status').update({
+      "count": 1,
+      "text": text,
+      "user": UserData.firstUserName,
+      "datetime": Timestamp.now(),
+      "time": DateFormat("hh:mm:ss a").format(DateTime.now()),
+    }).whenComplete(() => print("comleted"));
   }
 
   Future<CollectionReference<Map<String, dynamic>>>
@@ -85,17 +86,18 @@ class Messagedatabase {
     return (users.docs.isNotEmpty) ? userone : usertwo;
   }
 
-  Future<CollectionReference<Map<String, dynamic>>> userMessageStatus(
-      String secoondUser)async {
-
- QuerySnapshot<Map<String, dynamic>> users = await FirebaseFirestore.instance
+  CollectionReference<Map<String, dynamic>> userMessageStatus(
+      String secoondUser) {
+    Stream<QuerySnapshot<Map<String, dynamic>>> users = FirebaseFirestore
+        .instance
         .collection("${UserData.firstUserName}$secoondUser status-view")
-        .get();
+        .snapshots();
+
     final userone = FirebaseFirestore.instance.collection(
         "${UserData.firstUserName}${UserData.secondUserName} status-view");
     final usertwo = FirebaseFirestore.instance
         .collection("$secoondUser${UserData.firstUserName} status-view");
 
-    return (users.docs.isNotEmpty) ?  usertwo: userone;
+    return (users.isBroadcast) ? usertwo : userone;
   }
 }
