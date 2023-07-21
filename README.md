@@ -19,7 +19,7 @@
 
 ## Work Flow diagram,
 <p align=center>
-    <img src="asset_add/My First Board.pdf" width="65%" height="65%">
+    <img src="asset_add/My First Board2.jpeg" width="65%" height="65%">
 </p>
 
 
