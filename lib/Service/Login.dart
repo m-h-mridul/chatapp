@@ -18,10 +18,9 @@ loginButton(String email, String password, BuildContext context) async {
   try {
     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email, password: password);
-        
+
     if (userCredential != null) {
       UserData.userId = userCredential.user!.uid;
-      UserData.firstUserImage.value = userCredential.user!.uid;
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid)
@@ -31,8 +30,7 @@ loginButton(String email, String password, BuildContext context) async {
           name: Callingname.userUid, value: UserData.userId);
 
       Get.offAndToNamed(Alluser.name);
-      // Navigator.pushNamedAndRemoveUntil(
-      //     context, Alluser.name, (Route<dynamic> route) => false);
+      
     } else {
       if (kDebugMode) {
         print('finding some errors \nuser not creat');

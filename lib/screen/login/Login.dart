@@ -22,93 +22,91 @@ class Login extends StatelessWidget {
     const BorderRadius borderRadius = BorderRadius.all(
       Radius.circular(12),
     );
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //  animation folder
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Image(image: AssetImage('assets/message.png')),
-                    ),
-                    DefaultTextStyle(
-                      style: const TextStyle(
-                          color: Color(0xFFEF7822),
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold),
-                      child: AnimatedTextKit(
-                        // pause: Duration(seconds: 20),
-                        animatedTexts: [
-                          WavyAnimatedText('Messageing'),
-                          WavyAnimatedText('Messageing'),
-                          WavyAnimatedText('Messageing'),
-                        ],
-                        onTap: () {
-                          print("Tap Event");
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                // buttom ..............
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0, bottom: 12.0),
-                  child: TextField(
-                    controller: c_email,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: borderRadius,
-                      ),
-                      labelText: 'Email',
-                      hintText: 'Enter your email',
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              //  animation folder
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Image(image: AssetImage('assets/message.png')),
+                  ),
+                  DefaultTextStyle(
+                    style: const TextStyle(
+                        color: Color(0xFFEF7822),
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold),
+                    child: AnimatedTextKit(
+                      // pause: Duration(seconds: 20),
+                      animatedTexts: [
+                        WavyAnimatedText('Messageing'),
+                        WavyAnimatedText('Messageing'),
+                        WavyAnimatedText('Messageing'),
+                      ],
+                      onTap: () {
+                        print("Tap Event");
+                      },
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 0.0, bottom: 12.0),
-                  child: TextField(
-                    controller: c_password,
-                    obscureText: true,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: borderRadius,
-                      ),
-                      labelText: 'Password',
-                      hintText: 'Enter Password',
+                ],
+              ),
+              // buttom ..............
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0, bottom: 12.0),
+                child: TextField(
+                  controller: c_email,
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: borderRadius,
                     ),
+                    labelText: 'Email',
+                    hintText: 'Enter your email',
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuerypage.screenHeight! / 14,
-                  width: MediaQuerypage.screenWidth!,
-                  child: ElevatedButton(
-                    style: style,
-                    onPressed: () async {
-                      print("login working .....");
-                      SpinKitRotatingCircle(
-                        color: Colors.white,
-                        size: 50.0,
-                      );
-                      loginButton(c_email.text.toString().trim(),
-                          c_password.text.toString().trim(), context);
-                    },
-                    child: const Text('Login'),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 0.0, bottom: 12.0),
+                child: TextField(
+                  controller: c_password,
+                  obscureText: true,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: borderRadius,
+                    ),
+                    labelText: 'Password',
+                    hintText: 'Enter Password',
                   ),
                 ),
-              ]),
-        ),
+              ),
+              SizedBox(
+                height: MediaQuerypage.screenHeight! / 14,
+                width: MediaQuerypage.screenWidth!,
+                child: ElevatedButton(
+                  style: style,
+                  onPressed: () async {
+                    print("login working .....");
+                    SpinKitRotatingCircle(
+                      color: Colors.white,
+                      size: 50.0,
+                    );
+                    loginButton(c_email.text.toString().trim(),
+                        c_password.text.toString().trim(), context);
+                  },
+                  child: const Text('Login'),
+                ),
+              ),
+            ]),
       ),
     );
   }

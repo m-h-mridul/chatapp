@@ -10,7 +10,6 @@ import 'package:potro/screen/home/home.dart';
 import 'package:potro/screen/registation/registation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'controller/notificationcontroller.dart';
 import 'model/userdata.dart';
 import 'screen/Alluser/Alluser.dart';
@@ -33,26 +32,27 @@ Future<void> main() async {
 
   await _notificationService.intalizenotification();
 
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-        statusBarColor: Color(0xFFFFFFFF),
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light),
-  );
-  runApp(const MyApp());
+  
+   runApp(MyApp());
+  // runApp(MyApp2());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     _notificationService.whenappcloseappstart(context);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute:
-          cheakuserLogin != "not find" ? Alluser.name : MyHomePage.name,
+      home: cheakuserLogin != "not find" ? Alluser() : MyHomePage(),
       routes: {
-        MyHomePage.name: (context) => const MyHomePage(),
+        MyHomePage.name: (context) => MyHomePage(),
         Login.name: (context) => Login(),
         Registation.name: (context) => Registation(),
         Alluser.name: (context) => Alluser(),

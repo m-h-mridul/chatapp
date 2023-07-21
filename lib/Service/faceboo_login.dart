@@ -26,6 +26,7 @@ facebok_login() async {
       .set({
     'name': UserData.firstUserName,
     'email': UserData.email,
+    'imageLink': UserData.firstUserImage,
     'online': true,
   });
 }
