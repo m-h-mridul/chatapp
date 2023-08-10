@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, prefer_const_constructors_in_immutables, prefer_const_constructors, avoid_print, unnecessary_null_comparison, must_be_immutable, non_constant_identifier_names, duplicate_ignore, unused_field
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:get/get.dart';
 import 'package:potro/Service/Login.dart';
 import 'package:flutter/material.dart';
 import '../../helper/media.dart';
@@ -23,13 +24,28 @@ class Login extends StatelessWidget {
       Radius.circular(12),
     );
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.black,
+          onPressed: () {
+            Get.back();
+          },
+        ),
+        elevation: 0.1,
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: EdgeInsets.symmetric(
+            vertical: MediaQuerypage.safeBlockVertical!,
+            horizontal: MediaQuerypage.safeBlockHorizontal! * 3),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              //  animation folder
+              SizedBox(
+                height: MediaQuerypage.smallSizeHeight! * 12,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

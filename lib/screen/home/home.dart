@@ -26,85 +26,90 @@ class _MyHomePageState extends State<MyHomePage> {
     final ButtonStyle style = ElevatedButton.styleFrom(
         backgroundColor: const Color(0xFF009688),
         textStyle: const TextStyle(fontSize: 25));
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Image(image: AssetImage('assets/m1.jpg')),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: MediaQuerypage.screenHeight! / 14,
-                width: MediaQuerypage.screenWidth!,
-                child: ElevatedButton(
-                  style: style,
-                  onPressed: () {
-                    Navigator.pushNamed(context, Login.name);
-                  },
-                  child: const Text('Login'),
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: MediaQuerypage.smallSizeHeight!*2,
+          ),
+          const Image(image: AssetImage('assets/m1.jpg')),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: MediaQuerypage.screenHeight! / 14,
+              width: MediaQuerypage.screenWidth!,
+              child: ElevatedButton(
+                style: style,
+                onPressed: () {
+                  Navigator.pushNamed(context, Login.name);
+                },
+                child: const Text('Login'),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: MediaQuerypage.screenHeight! / 14,
-                width: MediaQuerypage.screenWidth!,
-                child: ElevatedButton(
-                  style: style,
-                  onPressed: () {
-                    Navigator.pushNamed(context, Registation.name);
-                  },
-                  child: const Text('Registation'),
-                ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: MediaQuerypage.screenHeight! / 14,
+              width: MediaQuerypage.screenWidth!,
+              child: ElevatedButton(
+                style: style,
+                onPressed: () {
+                  Navigator.pushNamed(context, Registation.name);
+                },
+                child: const Text('Registation'),
               ),
             ),
-            const Text('---------------------- OR ------------------------'),
-            // /google buttom for registation
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  InkWell(
+          ),
+          const Text('---------------------- OR ------------------------'),
+          // /google buttom for registation
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  child: CircleAvatar(
+                    backgroundImage: const AssetImage('assets/google.png'),
+                    maxRadius: MediaQuerypage.smallSizeWidth! * 7,
+                  ),
+                  onTap: () async {
+                    // call google to creat an account
+                    //in firebase
+                    await signInWithGoogle();
+                    // then goto the app
+                    Navigator.pushNamedAndRemoveUntil(context, Alluser.name,
+                        (Route<dynamic> route) => false);
+                  },
+                ),
+                InkWell(
+                  onTap: () async {
+                    // call google to creat an account
+                    //in firebase
+                    await facebok_login();
+                    // then goto the app
+                    Navigator.pushNamedAndRemoveUntil(context, Alluser.name,
+                        (Route<dynamic> route) => false);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: CircleAvatar(
-                      backgroundImage: const AssetImage('assets/google.png'),
-                      maxRadius: MediaQuerypage.smallSizeWidth! * 7,
-                    ),
-                    onTap: () async {
-                      // call google to creat an account
-                      //in firebase
-                      await signInWithGoogle();
-                      // then goto the app
-                      Navigator.pushNamedAndRemoveUntil(context, Alluser.name,
-                          (Route<dynamic> route) => false);
-                    },
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      // call google to creat an account
-                      //in firebase
-                      await facebok_login();
-                      // then goto the app
-                      Navigator.pushNamedAndRemoveUntil(context, Alluser.name,
-                          (Route<dynamic> route) => false);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        backgroundImage:
-                            const AssetImage('assets/facebook.png'),
-                        maxRadius: MediaQuerypage.smallSizeWidth! * 8,
-                      ),
+                      backgroundImage:
+                          const AssetImage('assets/facebook.png'),
+                      maxRadius: MediaQuerypage.smallSizeWidth! * 8,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

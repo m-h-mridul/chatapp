@@ -11,6 +11,9 @@ class UserData {
   static RxString firstUserImage = "".obs;
   static String secondUserActiveTime = "";
   static RxString secondUserImage = "".obs;
+  static RxString secondUserToken = "".obs;
+  static RxString firstUserToken = "".obs;
+
 }
 
 

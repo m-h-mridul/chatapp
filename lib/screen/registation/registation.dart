@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import '../../controller/fIlemanagemet.dart';
+import '../../controller/notificationcontroller.dart';
 import '../../helper/media.dart';
 
 class Registation extends StatelessWidget {
@@ -81,7 +82,7 @@ class Registation extends StatelessWidget {
                     ),
                   ),
                 ),
-                // ignore: prefer_const_constructors
+
                 Padding(
                   padding: const EdgeInsets.only(top: 0.0, bottom: 12.0),
                   child: TextField(
@@ -121,15 +122,17 @@ class Registation extends StatelessWidget {
                     style: style,
                     onPressed: () async {
                       print("registation working .....");
+                      NotificationService notificationService =
+                          NotificationService();
                       try {
-                        // creat an acccout in firebase database
-                        // by gmail and password
                         UserCredential userCredential =
                             await _auth.createUserWithEmailAndPassword(
                                 email: c_email.text.toString().trim(),
                                 password: c_password.text.toString().trim());
                         // set user id for get userInformation
                         UserData.userId = userCredential.user!.uid;
+                        String token =
+                            await notificationService.getdeviceToken();
                         SettableMetadata metadata2 = SettableMetadata(
                           contentType: 'image/jpeg',
                           customMetadata: {
@@ -137,12 +140,13 @@ class Registation extends StatelessWidget {
                             'content-name': _fileManagement.imagepath.value,
                             'author': UserData.firstUserName,
                             'time': DateTime.now().toString(),
+                            'usertoken': token
                           },
                         );
 
                         String imageLink = await _fileManagement
                             .imgaeSenttoDataBase(UserData.userId, metadata2);
-                        //add name & email of user
+                       
                         await FirebaseFirestore.instance
                             .collection('users')
                             .doc(userCredential.user!.uid)
@@ -152,6 +156,7 @@ class Registation extends StatelessWidget {
                           'online': true,
                           "datetime": Timestamp.now(),
                           'imageLink': imageLink,
+                          'usertoken': token
                         });
 
                         Get.offAndToNamed(Alluser.name);

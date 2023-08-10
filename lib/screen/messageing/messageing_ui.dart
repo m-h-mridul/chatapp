@@ -23,7 +23,10 @@ class Messageing_ui extends StatelessWidget {
     return Scaffold(
       appBar: appbarView(context),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.only(
+            left: MediaQuerypage.safeBlockVertical!,
+            right: MediaQuerypage.safeBlockVertical!,
+            bottom: MediaQuerypage.safeBlockHorizontal! * 6),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,

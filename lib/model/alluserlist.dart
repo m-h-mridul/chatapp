@@ -10,12 +10,13 @@ class Alluserlist {
     required this.userUid,
     required this.lastactive,
     required this.imageLink,
+    required this.usertoken,
   });
   String userName;
   bool activestatius;
   String userUid;
   Timestamp lastactive = Timestamp.now();
   String imageLink;
+  String usertoken;
   RxList<UserStatus> lastMessageUser = RxList<UserStatus>();
-
 }

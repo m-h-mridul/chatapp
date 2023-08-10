@@ -19,6 +19,7 @@ class UserList {
               userUid: element.id.toString(),
               lastactive: element.get("datetime"),
               imageLink: element.get("imageLink") ?? " ",
+              usertoken: element.get("usertoken") ?? " ",
             );
             CollectionReference<Map<String, dynamic>> databseName =
                 Messagedatabase().userMessageStatus(currentUserdata.userName);

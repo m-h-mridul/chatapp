@@ -31,10 +31,8 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await _notificationService.intalizenotification();
-
-  
    runApp(MyApp());
-  // runApp(MyApp2());
+ 
 }
 
 class MyApp extends StatefulWidget {
