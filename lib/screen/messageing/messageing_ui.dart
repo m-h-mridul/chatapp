@@ -2,6 +2,7 @@
 
 import 'package:get/get.dart';
 import 'package:potro/Service/Messagedatabase.dart';
+import 'package:potro/controller/notificationcontroller.dart';
 import 'package:potro/model/userdata.dart';
 import 'package:flutter/material.dart';
 import '../../helper/media.dart';
@@ -72,6 +73,10 @@ class Messageing_ui extends StatelessWidget {
                   child: ElevatedButton(
                     style: style,
                     onPressed: () async {
+                      await NotificationService.notificationSent(
+                          token: UserData.secondUserToken.value,
+                          text: messageController.text.toString(),
+                          title: UserData.secondUserName);
                       await Messagedatabase()
                           .messagesent(messageController.text.toString());
                       messageController.clear();
